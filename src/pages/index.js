@@ -13,7 +13,7 @@ const DragDropContext = dynamic(
 );
 
 const Home = () => {
-  const [tasks, setTasks] = useState(DUMMY_TASKS);
+  const [tasks, setTasks] = useState([]);
 
   const onDragEnd = (source) => {
     if (!source.destination?.droppableId) return;

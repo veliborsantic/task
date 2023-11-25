@@ -4,16 +4,9 @@ import Task from "../task";
 import { resetServerContext } from "react-beautiful-dnd";
 import { Droppable } from "react-beautiful-dnd";
 
-// const Droppable = dynamic(
-//   () =>
-//     import("react-beautiful-dnd").then((mod) => {
-//       return mod.Droppable;
-//     }),
-//   { ssr: false }
-// );
-
 const TasksList = (props) => {
   const { title, tasks } = props;
+
   resetServerContext();
 
   return (

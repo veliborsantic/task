@@ -4,18 +4,25 @@ import { STATUS } from "@/constants/dummy-tasks";
 import uuid from "react-uuid";
 
 const NewTask = (props) => {
-  const { isOpen, onClose, onAddNewTask } = props;
+  const {
+    isOpen,
+    onClose,
+    onAddNewTask,
+    onUpdateTask,
+    editMode,
+    description,
+    title,
+    id,
+  } = props;
   if (!isOpen) return null;
-
-  const id = uuid();
+  const newId = uuid();
 
   const [newTask, setNewTask] = useState({
-    id,
-    title: "",
-    description: "",
+    id: newId,
+    title: title || "",
+    description: description || "",
     status: STATUS.TODO,
   });
-  console.log("newatsk", typeof onAddNewTask);
 
   const handleTitleChange = (e) => {
     setNewTask({ ...newTask, title: e.target.value });
@@ -27,7 +34,8 @@ const NewTask = (props) => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    onAddNewTask(newTask);
+    if (!id) onAddNewTask(newTask);
+    if (id) onUpdateTask(newTask);
     onClose();
   };
 
@@ -38,7 +46,7 @@ const NewTask = (props) => {
           <div className='d-flex justify-content-end'>
             <button onClick={onClose}>X</button>
           </div>
-          <h2 className='text-center'>New Task</h2>
+          <h2 className='text-center'>{editMode ? "Edit" : "New"} Task</h2>
           <form onSubmit={handleOnSubmit}>
             <input
               className='d-block w-100 my-4'
@@ -58,7 +66,7 @@ const NewTask = (props) => {
               onChange={handleDescriptionChange}
             />
             <button className='d-block mx-auto mt-5' type='submit'>
-              Save
+              {editMode ? "Update" : "Save"}
             </button>
           </form>
         </div>

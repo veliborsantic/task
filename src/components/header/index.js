@@ -12,7 +12,6 @@ const Header = (props) => {
   const onClose = () => {
     setShowNewTask(false);
   };
-  console.log("header", typeof props.onAddNewTask);
 
   return (
     <div className={`bg-primary ${styles.header}`}>
@@ -23,7 +22,12 @@ const Header = (props) => {
         <button>Login</button>
       </div>
       {showNewTask && (
-        <NewTask isOpen onClose={onClose} onAddNewTask={props.onAddNewTask} />
+        <NewTask
+          isOpen
+          onClose={onClose}
+          editMode={false}
+          onAddNewTask={props.onAddNewTask}
+        />
       )}
     </div>
   );
