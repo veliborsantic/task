@@ -9,9 +9,10 @@ const NewTask = (props) => {
   const { isOpen, onClose, editMode, description, title, id, status } = props;
   if (!isOpen) return null;
 
-  const dispatch = useDispatch();
-  const newId = uuid();
   const tasks = useSelector((state) => state.tasks);
+  const dispatch = useDispatch();
+
+  const newId = uuid();
 
   const [newTask, setNewTask] = useState({
     id: id || newId,
@@ -28,7 +29,7 @@ const NewTask = (props) => {
     setNewTask({ ...newTask, description: e.target.value });
   };
 
-  const handleOnSubmit = (e) => {
+  const handleTasksChange = (e) => {
     e.preventDefault();
     if (editMode) {
       const updatedTasks = tasks.map((task) =>
@@ -41,6 +42,12 @@ const NewTask = (props) => {
     onClose();
   };
 
+  const handleDeleteTask = () => {
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+    dispatch(tasksActions.replaceTasks(updatedTasks));
+    onClose();
+  };
+
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modal}>
@@ -49,7 +56,7 @@ const NewTask = (props) => {
             <button onClick={onClose}>X</button>
           </div>
           <h2 className='text-center'>{editMode ? "Edit" : "New"} Task</h2>
-          <form onSubmit={handleOnSubmit}>
+          <form onSubmit={handleTasksChange}>
             <input
               className='d-block w-100 my-4'
               type='text'
@@ -67,9 +74,21 @@ const NewTask = (props) => {
               placeholder='Enter task description...'
               onChange={handleDescriptionChange}
             />
-            <button className='d-block mx-auto mt-5' type='submit'>
-              {editMode ? "Update" : "Save"}
-            </button>
+            <div className='d-flex'>
+              <button className='d-block mx-auto mt-5 button' type='submit'>
+                {editMode ? "Update" : "Save"}
+              </button>
+              {editMode && (
+                <button
+                  className='mx-auto mt-5 button'
+                  style={{ background: "red" }}
+                  type='submit'
+                  onClick={handleDeleteTask}
+                >
+                  Delete
+                </button>
+              )}
+            </div>
           </form>
         </div>
       </div>

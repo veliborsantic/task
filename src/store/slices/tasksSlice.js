@@ -14,8 +14,6 @@ export const tasksSlice = createSlice({
     replaceTasks(state, action) {
       state.tasks = action.payload;
     },
-    // updateTask() {},
-    // deleteTask() {},
   },
 });
 

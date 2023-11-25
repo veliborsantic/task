@@ -16,10 +16,10 @@ const Header = () => {
   return (
     <div className={`bg-primary ${styles.header}`}>
       <div className='p-3 d-flex justify-content-end align-items-center'>
-        <button className='mx-auto' onClick={newTaskHandler}>
+        <button className='mx-auto button' onClick={newTaskHandler}>
           Add new task
         </button>
-        <button>Login</button>
+        <button className='button'>Login</button>
       </div>
       {showNewTask && <NewTask isOpen onClose={onClose} />}
     </div>
