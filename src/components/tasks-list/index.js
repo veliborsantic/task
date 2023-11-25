@@ -1,6 +1,5 @@
 import React from "react";
 import Task from "../task";
-// import dynamic from "next/dynamic";
 import { resetServerContext } from "react-beautiful-dnd";
 import { Droppable } from "react-beautiful-dnd";
 
@@ -21,7 +20,7 @@ const TasksList = (props) => {
           >
             {tasks.map((task, index) => {
               return (
-                <li key={task.title}>
+                <li key={task.id}>
                   <Task index={index} {...task} />
                 </li>
               );

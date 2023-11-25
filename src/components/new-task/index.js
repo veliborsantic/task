@@ -2,26 +2,22 @@ import React, { useState } from "react";
 import styles from "./new-task.module.scss";
 import { STATUS } from "@/constants/dummy-tasks";
 import uuid from "react-uuid";
+import { tasksActions } from "../../store/slices/tasksSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const NewTask = (props) => {
-  const {
-    isOpen,
-    onClose,
-    onAddNewTask,
-    onUpdateTask,
-    editMode,
-    description,
-    title,
-    id,
-  } = props;
+  const { isOpen, onClose, editMode, description, title, id, status } = props;
   if (!isOpen) return null;
+
+  const dispatch = useDispatch();
   const newId = uuid();
+  const tasks = useSelector((state) => state.tasks);
 
   const [newTask, setNewTask] = useState({
-    id: newId,
+    id: id || newId,
     title: title || "",
     description: description || "",
-    status: STATUS.TODO,
+    status: status || STATUS.TODO,
   });
 
   const handleTitleChange = (e) => {
@@ -34,8 +30,14 @@ const NewTask = (props) => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    if (!id) onAddNewTask(newTask);
-    if (id) onUpdateTask(newTask);
+    if (editMode) {
+      const updatedTasks = tasks.map((task) =>
+        task.id === id ? newTask : task
+      );
+      dispatch(tasksActions.replaceTasks(updatedTasks));
+    } else {
+      dispatch(tasksActions.addTask(newTask));
+    }
     onClose();
   };
 

@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import Header from "../components/header";
 import TasksList from "../components/tasks-list";
-import { STATUS, DUMMY_TASKS } from "../constants/dummy-tasks";
+import { STATUS } from "../constants/dummy-tasks";
 import dynamic from "next/dynamic";
+import { useSelector, useDispatch } from "react-redux";
+import { tasksActions } from "@/store/slices/tasksSlice";
 
 const DragDropContext = dynamic(
   () =>
@@ -13,26 +15,23 @@ const DragDropContext = dynamic(
 );
 
 const Home = () => {
-  const [tasks, setTasks] = useState([]);
+  const tasks = useSelector((state) => state.tasks);
+  const dispatch = useDispatch();
 
   const onDragEnd = (source) => {
     if (!source.destination?.droppableId) return;
 
     const updatedTasks = tasks.map((task) =>
-      task.title === source.draggableId
+      task.id === source.draggableId
         ? { ...task, status: source.destination.droppableId }
         : task
     );
-    setTasks(updatedTasks);
-  };
-
-  const onAddNewTask = (newTask) => {
-    setTasks([...tasks, newTask]);
+    dispatch(tasksActions.replaceTasks(updatedTasks));
   };
 
   return (
     <div className='container'>
-      <Header onAddNewTask={onAddNewTask} />
+      <Header />
       <DragDropContext onDragEnd={onDragEnd}>
         <div className='d-flex tasklist'>
           {Object.values(STATUS).map((status) => (

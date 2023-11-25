@@ -11,32 +11,17 @@ const Task = (props) => {
     setShowNewTask(true);
   };
 
-  // TODO: ovo ne radi dok redux ne dodje
-  const onUpdateTask = () => {
-    console.log("Izmjena");
-  };
-
   // TODO: modal preseliti u redux
   const onClose = () => {
     setShowNewTask(false);
   };
 
   if (showNewTask)
-    return (
-      <NewTask
-        isOpen
-        editMode
-        onUpdateTask={onUpdateTask}
-        onClose={onClose}
-        title={title}
-        description={description}
-        id={id}
-      />
-    );
+    return <NewTask isOpen editMode onClose={onClose} {...props} />;
 
   return (
     <>
-      <Draggable draggableId={title} index={index}>
+      <Draggable draggableId={id} index={index}>
         {(provided) => (
           <div
             ref={provided.innerRef}
