@@ -3,7 +3,7 @@ import Header from "../components/header";
 import TasksList from "../components/tasks-list";
 import { STATUS, DUMMY_TASKS } from "../constants/dummy-tasks";
 import dynamic from "next/dynamic";
-// import { DragDropContext } from "react-beautiful-dnd";
+
 const DragDropContext = dynamic(
   () =>
     import("react-beautiful-dnd").then((mod) => {
@@ -26,9 +26,13 @@ const Home = () => {
     setTasks(updatedTasks);
   };
 
+  const onAddNewTask = (newTask) => {
+    setTasks([...tasks, newTask]);
+  };
+
   return (
     <div className='container'>
-      <Header />
+      <Header onAddNewTask={onAddNewTask} />
       <DragDropContext onDragEnd={onDragEnd}>
         <div className='d-flex tasklist'>
           {Object.values(STATUS).map((status) => (

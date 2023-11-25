@@ -24,8 +24,12 @@ const Task = (props) => {
           className={`d-flex mx-5 my-1 justify-content-center ${styles.task}`}
         >
           <div>
-            <div className='d-flex justify-content-center'>{title}</div>
-            <div className='mt-5 mx-3'>{description}</div>
+            <div className='d-flex justify-content-center text-center mx-2 fw-bold'>
+              {title}
+            </div>
+            <div className='d-flex justify-content-center mt-5 mx-1 text-center'>
+              {description}
+            </div>
           </div>
         </div>
       )}
