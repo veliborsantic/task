@@ -19,7 +19,7 @@ const Header = () => {
         <button className='mx-auto button' onClick={newTaskHandler}>
           Add new task
         </button>
-        <button className='button'>Login</button>
+        <button className='button'>Logout</button>
       </div>
       {showNewTask && <NewTask isOpen onClose={onClose} />}
     </div>
