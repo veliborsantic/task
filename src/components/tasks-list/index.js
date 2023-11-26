@@ -8,11 +8,11 @@ const TasksList = (props) => {
 
   return (
     <div className='col-4 '>
-      <h4
-        className={`d-flex mx-5 my-4 justify-content-center ${styles.title} `}
+      <h3
+        className={`d-flex fw-bold mx-5 my-4 justify-content-center ${styles.title} `}
       >
         {title}
-      </h4>
+      </h3>
       <Droppable droppableId={title}>
         {(provided) => (
           <ul

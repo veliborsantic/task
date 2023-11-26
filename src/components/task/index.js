@@ -31,9 +31,9 @@ const Task = (props) => {
             onClick={onClickTaskHandler}
           >
             <div>
-              <div className='d-flex justify-content-center text-center mx-2 fw-bold'>
+              <h4 className='d-flex justify-content-center text-center mx-2 mt-2 fw-bold'>
                 {title}
-              </div>
+              </h4>
               <div className='d-flex justify-content-center mt-5 mx-1 text-center'>
                 {description}
               </div>
