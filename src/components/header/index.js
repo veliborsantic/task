@@ -18,20 +18,25 @@ const Header = (props) => {
     signOut();
   };
 
-  return (
-    <div className={`bg-primary ${styles.header}`}>
-      <div className='p-3 d-flex justify-content-end align-items-center'>
-        <button className='mx-auto button' onClick={newTaskHandler}>
+return (
+  <div className={`bg-primary ${styles.header}`}>
+    <div className='p-3 d-flex justify-content-between align-items-center'>
+      <div>
+        <button className='button' onClick={newTaskHandler}>
           Add new task
         </button>
-        <div className='text-white'>{props?.session.user.name || ""} </div>
+      </div>
+      <div className='d-flex align-items-center'>
+        <div className='text-white'>{props?.session.user.name || ""}</div>
         <button className='button' onClick={handleSignOut}>
           Sign out
         </button>
       </div>
-      {showNewTask && <NewTask isOpen onClose={onClose} />}
     </div>
-  );
+    {showNewTask && <NewTask isOpen onClose={onClose} />}
+  </div>
+);
+
 };
 
 export default Header;
