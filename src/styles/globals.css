@@ -1,5 +1,6 @@
 .tasklist {
   min-height: 90vh;
+  border: 1px solid #2c8f9e;
 }
 
 ul {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./new-task.module.scss";
-import { STATUS } from "@/constants/dummy-tasks";
+import { STATUS } from "@/constants";
 import uuid from "react-uuid";
 import { tasksActions } from "../../store/slices/tasksSlice";
 import { useDispatch, useSelector } from "react-redux";

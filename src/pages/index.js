@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../components/header";
 import TasksList from "../components/tasks-list";
-import { STATUS } from "../constants/dummy-tasks";
+import { STATUS } from "../constants";
 import dynamic from "next/dynamic";
 import { useSelector, useDispatch } from "react-redux";
 import { tasksActions } from "@/store/slices/tasksSlice";
@@ -31,7 +31,7 @@ const Home = (props) => {
     );
     dispatch(tasksActions.replaceTasks(updatedTasks));
   };
-  console.log(session);
+
   return (
     <div className='container'>
       <Header session={session} />

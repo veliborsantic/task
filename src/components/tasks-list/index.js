@@ -7,7 +7,7 @@ const TasksList = (props) => {
   const { title, tasks } = props;
 
   return (
-    <div className='col-4 '>
+    <div className={`col-4 ${styles.listContainer}`}>
       <h3
         className={`d-flex fw-bold mx-5 my-4 justify-content-center ${styles.title} `}
       >
