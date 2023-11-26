@@ -1,12 +1,12 @@
 import React from "react";
 import Task from "../task";
-import { resetServerContext } from "react-beautiful-dnd";
+// import { resetServerContext } from "react-beautiful-dnd";
 import { Droppable } from "react-beautiful-dnd";
 
 const TasksList = (props) => {
   const { title, tasks } = props;
 
-  resetServerContext();
+  // resetServerContext();
 
   return (
     <div className='col-4'>

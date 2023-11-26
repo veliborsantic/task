@@ -5,6 +5,7 @@ import { STATUS } from "../constants/dummy-tasks";
 import dynamic from "next/dynamic";
 import { useSelector, useDispatch } from "react-redux";
 import { tasksActions } from "@/store/slices/tasksSlice";
+import { getSession } from "next-auth/react";
 
 const DragDropContext = dynamic(
   () =>
@@ -14,9 +15,11 @@ const DragDropContext = dynamic(
   { ssr: false }
 );
 
-const Home = () => {
+const Home = (props) => {
   const tasks = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
+
+  const { session } = props;
 
   const onDragEnd = (source) => {
     if (!source.destination?.droppableId) return;
@@ -28,10 +31,10 @@ const Home = () => {
     );
     dispatch(tasksActions.replaceTasks(updatedTasks));
   };
-
+  console.log(session);
   return (
     <div className='container'>
-      <Header />
+      <Header session={session} />
       <DragDropContext onDragEnd={onDragEnd}>
         <div className='d-flex tasklist'>
           {Object.values(STATUS).map((status) => (
@@ -47,12 +50,21 @@ const Home = () => {
   );
 };
 
-export async function getServerSideProps() {
-  console.log("ssr");
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: process.env.LOGIN_API,
+        permanent: false,
+      },
+    };
+  }
 
   return {
     props: {
-      nekiProp: "xx",
+      session,
     },
   };
 }
