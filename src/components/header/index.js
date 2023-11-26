@@ -19,7 +19,7 @@ const Header = (props) => {
   };
 
 return (
-  <div className={`bg-primary ${styles.header}`}>
+  <div className={styles.header}>
     <div className='p-3 d-flex justify-content-between align-items-center'>
       <div>
         <button className='button' onClick={newTaskHandler}>

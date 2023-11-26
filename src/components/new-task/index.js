@@ -53,9 +53,13 @@ const NewTask = (props) => {
       <div className={styles.modal}>
         <div>
           <div className='d-flex justify-content-end'>
-            <button onClick={onClose}>X</button>
+            <button className='close-button' onClick={onClose}>
+              X
+            </button>
           </div>
-          <h2 className='text-center'>{editMode ? "Edit" : "New"} Task</h2>
+          <h2 className='text-center text-white'>
+            {editMode ? "Edit" : "New"} Task
+          </h2>
           <form onSubmit={handleTasksChange}>
             <input
               className='d-block w-100 my-4'
@@ -84,8 +88,7 @@ const NewTask = (props) => {
               </button>
               {editMode && (
                 <button
-                  className='mx-auto mt-5 button'
-                  style={{ background: "red" }}
+                  className='mx-auto mt-5 button delete-button'
                   type='submit'
                   onClick={handleDeleteTask}
                 >

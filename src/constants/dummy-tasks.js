@@ -4,6 +4,12 @@ export const STATUS = {
   DONE: "DONE",
 };
 
+export const STATUS_COLORS = {
+  TODO: "red",
+  DOING: "yellow",
+  DONE: "green",
+};
+
 export const DUMMY_TASKS = [
   {
     id: "t1",
