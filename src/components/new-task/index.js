@@ -75,7 +75,11 @@ const NewTask = (props) => {
               onChange={handleDescriptionChange}
             />
             <div className='d-flex'>
-              <button className='d-block mx-auto mt-5 button' type='submit'>
+              <button
+                className='d-block mx-auto mt-5 button disabled'
+                type='submit'
+                disabled={!newTask.title || !newTask.description}
+              >
                 {editMode ? "Update" : "Save"}
               </button>
               {editMode && (
