@@ -8,11 +8,13 @@ const TasksList = (props) => {
 
   return (
     <div className={`col-4 ${styles.listContainer}`}>
-      <h3
-        className={`d-flex fw-bold mx-5 my-4 justify-content-center ${styles.title} `}
-      >
-        {title}
-      </h3>
+      <div className={`mx-3 ${styles.titleContainer}`}>
+        <h4
+          className={`d-flex fw-bold mx-5 my-4 py-2 justify-content-center ${styles.title} `}
+        >
+          {title}
+        </h4>
+      </div>
       <Droppable droppableId={title}>
         {(provided) => (
           <ul
