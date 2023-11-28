@@ -26,7 +26,6 @@ const Home = (props) => {
     const getTasks = async () => {
       const response = await fetch("http://localhost:3000/api/tasks");
       const tasksData = await response.json();
-      console.log("td", tasksData);
       dispatch(tasksActions.initTasks(tasksData));
     };
     getTasks();

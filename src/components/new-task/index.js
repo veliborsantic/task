@@ -2,13 +2,8 @@ import React, { useState } from "react";
 import styles from "./new-task.module.scss";
 import { STATUS } from "@/constants";
 import uuid from "react-uuid";
-import { tasksActions } from "../../store/slices/tasksSlice";
+import { deleteTask, addTask, updateTask } from "../../store/slices/tasksSlice";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addTaskToBackend,
-  removeTaskFromBackend,
-  updateTaskOnBackend,
-} from "@/utils/apiutils";
 
 const NewTask = (props) => {
   const { isOpen, onClose, editMode, description, title, id, status } = props;
@@ -37,18 +32,15 @@ const NewTask = (props) => {
   const handleTasksChange = (e) => {
     e.preventDefault();
     if (editMode) {
-      dispatch(tasksActions.updateTask(newTask));
-      updateTaskOnBackend(newTask);
+      dispatch(updateTask(newTask));
     } else {
-      dispatch(tasksActions.addTask(newTask));
-      addTaskToBackend(newTask);
+      dispatch(addTask(newTask));
     }
     onClose();
   };
 
   const handleDeleteTask = () => {
-    dispatch(tasksActions.deleteTask(id));
-    removeTaskFromBackend(id);
+    dispatch(deleteTask(id));
     onClose();
   };
 

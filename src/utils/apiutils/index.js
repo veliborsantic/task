@@ -27,6 +27,14 @@ export const updateTaskOnBackend = async (updatedTask) => {
   });
 };
 
+export const deleteTaskOnBackend = async (id) => {
+  await fetch(API.DELETE, {
+    method,
+    headers,
+    body: JSON.stringify(id),
+  });
+};
+
 export const updateStatusOnBackend = (data) => {
   fetch(API.STATUS, {
     method,

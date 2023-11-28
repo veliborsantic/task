@@ -11,7 +11,6 @@ const Task = (props) => {
     setShowNewTask(true);
   };
 
-  // TODO: modal preseliti u redux
   const onClose = () => {
     setShowNewTask(false);
   };
