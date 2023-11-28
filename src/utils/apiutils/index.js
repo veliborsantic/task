@@ -11,14 +11,6 @@ export const addTaskToBackend = async (newTask) => {
   });
 };
 
-export const removeTaskFromBackend = async (id) => {
-  await fetch(API.DELETE, {
-    method,
-    headers,
-    body: JSON.stringify(id),
-  });
-};
-
 export const updateTaskOnBackend = async (updatedTask) => {
   await fetch(API.UPDATE, {
     method,

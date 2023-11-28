@@ -9,13 +9,14 @@ const NewTask = (props) => {
   const { isOpen, onClose, editMode, description, title, id, status } = props;
   if (!isOpen) return null;
 
-  const tasks = useSelector((state) => state.tasks);
+  const userId = useSelector((state) => state.user.userId);
   const dispatch = useDispatch();
 
   const newId = uuid();
 
   const [newTask, setNewTask] = useState({
     id: id || newId,
+    userId: userId || "",
     title: title || "",
     description: description || "",
     status: status || STATUS.TODO,

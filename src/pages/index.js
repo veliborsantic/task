@@ -4,9 +4,9 @@ import TasksList from "../components/tasks-list";
 import { STATUS, API } from "../constants";
 import dynamic from "next/dynamic";
 import { useSelector, useDispatch } from "react-redux";
-import { tasksActions } from "@/store/slices/tasksSlice";
+import { tasksActions, updateStatus } from "@/store/slices/tasksSlice";
 import { getSession } from "next-auth/react";
-import { updateStatusOnBackend } from "@/utils/apiutils";
+import { userActions } from "@/store/slices/userSlice";
 
 const DragDropContext = dynamic(
   () =>
@@ -17,28 +17,29 @@ const DragDropContext = dynamic(
 );
 
 const Home = (props) => {
-  const tasks = useSelector((state) => state.tasks);
+  const tasks = useSelector((state) => state.tasks.tasks);
+  const userId = useSelector((state) => state.user.userId);
   const dispatch = useDispatch();
 
   const { session } = props;
+  dispatch(userActions.setUserId(session.user.email));
 
   useEffect(() => {
     const getTasks = async () => {
       const response = await fetch("http://localhost:3000/api/tasks");
       const tasksData = await response.json();
-      dispatch(tasksActions.initTasks(tasksData));
+      dispatch(tasksActions.initTasks({ tasksData, userId }));
     };
     getTasks();
-  }, []);
+  }, [userId]);
 
   const onDragEnd = (source) => {
     if (!source.destination?.droppableId) return;
 
     const id = source.draggableId;
     const newStatus = source.destination.droppableId;
-
-    dispatch(tasksActions.updateStatus({ id, newStatus }));
-    updateStatusOnBackend({ id, newStatus });
+    const data = { id, newStatus };
+    dispatch(updateStatus(data));
   };
 
   return (

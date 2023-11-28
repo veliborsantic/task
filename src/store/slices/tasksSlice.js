@@ -15,7 +15,9 @@ export const tasksSlice = createSlice({
   initialState,
   reducers: {
     initTasks(state, action) {
-      state.tasks = action.payload;
+      console.log("Dobijam ", action);
+      const { tasksData, userId } = action.payload;
+      state.tasks = tasksData.filter((task) => task.userId === userId);
     },
     addTask(state, action) {
       state.tasks = [...state.tasks, action.payload];
@@ -72,6 +74,5 @@ export const updateStatus = (data) => async (dispatch) => {
     console.error("Error updating task status", error);
   }
 };
-
 
 export const tasksActions = tasksSlice.actions;
