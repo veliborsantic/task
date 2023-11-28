@@ -2,7 +2,6 @@ import { promises as fs } from "fs";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    console.log("Dobijam za status", req.body);
     const { id, newStatus } = req.body;
     const tasks = await fs.readFile(process.cwd() + "/tasks.json", "utf8");
     let data = JSON.parse(tasks);

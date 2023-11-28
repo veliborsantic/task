@@ -15,7 +15,6 @@ export const tasksSlice = createSlice({
   initialState,
   reducers: {
     initTasks(state, action) {
-      console.log("Dobijam ", action);
       const { tasksData, userId } = action.payload;
       state.tasks = tasksData.filter((task) => task.userId === userId);
     },
