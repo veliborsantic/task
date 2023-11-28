@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Header from "../components/header";
 import TasksList from "../components/tasks-list";
-import { STATUS } from "../constants";
+import { STATUS, API } from "../constants";
 import dynamic from "next/dynamic";
 import { useSelector, useDispatch } from "react-redux";
 import { tasksActions } from "@/store/slices/tasksSlice";
@@ -66,7 +66,7 @@ export async function getServerSideProps(context) {
   if (!session) {
     return {
       redirect: {
-        destination: process.env.LOGIN_API,
+        destination: API.LOGIN,
         permanent: false,
       },
     };
