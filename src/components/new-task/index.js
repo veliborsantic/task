@@ -29,22 +29,45 @@ const NewTask = (props) => {
     setNewTask({ ...newTask, description: e.target.value });
   };
 
+  const addTaskToBackend = () => {
+    fetch("/api/tasks/create", {
+      method: "POST",
+      headers: { "Content-TYPE": "application/json" },
+      body: JSON.stringify(newTask),
+    });
+  };
+
+  const removeTaskFromBackend = () => {
+    fetch("/api/tasks/delete", {
+      method: "POST",
+      headers: { "Content-TYPE": "application/json" },
+      body: JSON.stringify(id),
+    });
+  };
+
+  const updateTaskOnBackend = () => {
+    fetch("/api/tasks/update", {
+      method: "POST",
+      headers: { "Content-TYPE": "application/json" },
+      body: JSON.stringify(newTask),
+    });
+  };
+
   const handleTasksChange = (e) => {
     e.preventDefault();
     if (editMode) {
-      const updatedTasks = tasks.map((task) =>
-        task.id === id ? newTask : task
-      );
-      dispatch(tasksActions.replaceTasks(updatedTasks));
+      dispatch(tasksActions.updateTask(newTask));
+      updateTaskOnBackend();
     } else {
       dispatch(tasksActions.addTask(newTask));
+      addTaskToBackend();
     }
     onClose();
   };
 
   const handleDeleteTask = () => {
-    const updatedTasks = tasks.filter((task) => task.id !== id);
-    dispatch(tasksActions.replaceTasks(updatedTasks));
+    dispatch(tasksActions.deleteTask(id));
+    removeTaskFromBackend();
     onClose();
   };
 

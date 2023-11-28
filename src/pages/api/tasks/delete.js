@@ -1,0 +1,13 @@
+import { promises as fs } from "fs";
+
+export default async function handler(req, res) {
+  if (req.method === "POST") {
+    const id = req.body;
+    const tasks = await fs.readFile(process.cwd() + "/tasks.json", "utf8");
+    let data = JSON.parse(tasks);
+    data = data.filter((task) => task.id !== id);
+    await fs.writeFile(process.cwd() + "/tasks.json", JSON.stringify(data));
+    return res.status(200).json(data);
+  }
+  return res.status(405).json("Method not allowed");
+}

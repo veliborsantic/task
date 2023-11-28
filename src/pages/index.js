@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../components/header";
 import TasksList from "../components/tasks-list";
 import { STATUS } from "../constants";
@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import { useSelector, useDispatch } from "react-redux";
 import { tasksActions } from "@/store/slices/tasksSlice";
 import { getSession } from "next-auth/react";
+import { store } from "../store";
 
 const DragDropContext = dynamic(
   () =>
@@ -21,15 +22,32 @@ const Home = (props) => {
 
   const { session } = props;
 
+  useEffect(() => {
+    const getTasks = async () => {
+      const response = await fetch("http://localhost:3000/api/tasks");
+      const tasksData = await response.json();
+      console.log("td", tasksData);
+      dispatch(tasksActions.initTasks(tasksData));
+    };
+    getTasks();
+  }, []);
+
   const onDragEnd = (source) => {
     if (!source.destination?.droppableId) return;
 
-    const updatedTasks = tasks.map((task) =>
-      task.id === source.draggableId
-        ? { ...task, status: source.destination.droppableId }
-        : task
-    );
-    dispatch(tasksActions.replaceTasks(updatedTasks));
+    const id = source.draggableId;
+    const newStatus = source.destination.droppableId;
+
+    dispatch(tasksActions.updateStatus({ id, newStatus }));
+    updateStatusOnBackend({ id, newStatus });
+  };
+
+  const updateStatusOnBackend = (data) => {
+    fetch("/api/tasks/status", {
+      method: "POST",
+      headers: { "Content-TYPE": "application/json" },
+      body: JSON.stringify(data),
+    });
   };
 
   return (
