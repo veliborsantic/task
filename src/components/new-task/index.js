@@ -4,6 +4,11 @@ import { STATUS } from "@/constants";
 import uuid from "react-uuid";
 import { tasksActions } from "../../store/slices/tasksSlice";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  addTaskToBackend,
+  removeTaskFromBackend,
+  updateTaskOnBackend,
+} from "@/utils/apiutils";
 
 const NewTask = (props) => {
   const { isOpen, onClose, editMode, description, title, id, status } = props;
@@ -29,45 +34,21 @@ const NewTask = (props) => {
     setNewTask({ ...newTask, description: e.target.value });
   };
 
-  const addTaskToBackend = () => {
-    fetch("/api/tasks/create", {
-      method: "POST",
-      headers: { "Content-TYPE": "application/json" },
-      body: JSON.stringify(newTask),
-    });
-  };
-
-  const removeTaskFromBackend = () => {
-    fetch("/api/tasks/delete", {
-      method: "POST",
-      headers: { "Content-TYPE": "application/json" },
-      body: JSON.stringify(id),
-    });
-  };
-
-  const updateTaskOnBackend = () => {
-    fetch("/api/tasks/update", {
-      method: "POST",
-      headers: { "Content-TYPE": "application/json" },
-      body: JSON.stringify(newTask),
-    });
-  };
-
   const handleTasksChange = (e) => {
     e.preventDefault();
     if (editMode) {
       dispatch(tasksActions.updateTask(newTask));
-      updateTaskOnBackend();
+      updateTaskOnBackend(newTask);
     } else {
       dispatch(tasksActions.addTask(newTask));
-      addTaskToBackend();
+      addTaskToBackend(newTask);
     }
     onClose();
   };
 
   const handleDeleteTask = () => {
     dispatch(tasksActions.deleteTask(id));
-    removeTaskFromBackend();
+    removeTaskFromBackend(id);
     onClose();
   };
 

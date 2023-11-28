@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import { useSelector, useDispatch } from "react-redux";
 import { tasksActions } from "@/store/slices/tasksSlice";
 import { getSession } from "next-auth/react";
-import { store } from "../store";
+import { updateStatusOnBackend } from "@/utils/apiutils";
 
 const DragDropContext = dynamic(
   () =>
@@ -40,14 +40,6 @@ const Home = (props) => {
 
     dispatch(tasksActions.updateStatus({ id, newStatus }));
     updateStatusOnBackend({ id, newStatus });
-  };
-
-  const updateStatusOnBackend = (data) => {
-    fetch("/api/tasks/status", {
-      method: "POST",
-      headers: { "Content-TYPE": "application/json" },
-      body: JSON.stringify(data),
-    });
   };
 
   return (
